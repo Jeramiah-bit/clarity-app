@@ -179,6 +179,24 @@
     .value-props {
       background: #FFFFFF;
       padding: 120px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .value-props .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    #ripple-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.35;
+      pointer-events: none;
     }
 
     .section-label {
@@ -503,7 +521,8 @@
   </section>
 
   <!-- HOW IT WORKS -->
-  <section class="value-props">
+  <section class="value-props" id="how-it-works">
+    <canvas id="ripple-canvas"></canvas>
     <div class="container">
       <p class="section-label">How Clarity works</p>
       <div class="steps">
@@ -596,5 +615,103 @@
     </div>
   </footer>
 
+  <script>
+    (function() {
+      const canvas = document.getElementById('ripple-canvas');
+      const section = document.getElementById('how-it-works');
+      const ctx = canvas.getContext('2d');
+
+      let width, height;
+      const ripples = [];
+      const color = { r: 154, g: 177, b: 192 }; // #9AB1C0
+
+      function resize() {
+        const rect = section.getBoundingClientRect();
+        width = canvas.width = rect.width;
+        height = canvas.height = rect.height;
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+
+      // Track mouse over the section
+      section.addEventListener('mousemove', function(e) {
+        const rect = section.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Throttle: only add a ripple every ~60ms
+        const now = Date.now();
+        if (!this._lastRipple || now - this._lastRipple > 60) {
+          ripples.push({
+            x: x,
+            y: y,
+            radius: 0,
+            maxRadius: 150 + Math.random() * 100,
+            opacity: 0.4,
+            lineWidth: 1.5 + Math.random() * 1,
+            speed: 1.2 + Math.random() * 0.8
+          });
+          this._lastRipple = now;
+        }
+      });
+
+      // Also add ripples on touch for mobile
+      section.addEventListener('touchmove', function(e) {
+        const rect = section.getBoundingClientRect();
+        const touch = e.touches[0];
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+
+        const now = Date.now();
+        if (!this._lastRipple || now - this._lastRipple > 80) {
+          ripples.push({
+            x: x,
+            y: y,
+            radius: 0,
+            maxRadius: 150 + Math.random() * 100,
+            opacity: 0.35,
+            lineWidth: 1.5 + Math.random() * 1,
+            speed: 1.2 + Math.random() * 0.8
+          });
+          this._lastRipple = now;
+        }
+      }, { passive: true });
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = ripples.length - 1; i >= 0; i--) {
+          const r = ripples[i];
+          r.radius += r.speed;
+          r.opacity *= 0.985;
+
+          if (r.opacity < 0.01 || r.radius > r.maxRadius) {
+            ripples.splice(i, 1);
+            continue;
+          }
+
+          // Draw multiple concentric rings per ripple
+          for (let ring = 0; ring < 3; ring++) {
+            const ringRadius = r.radius - ring * 12;
+            if (ringRadius <= 0) continue;
+
+            const ringOpacity = r.opacity * (1 - ring * 0.3);
+            ctx.beginPath();
+            ctx.arc(r.x, r.y, ringRadius, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + ringOpacity + ')';
+            ctx.lineWidth = r.lineWidth * (1 - ring * 0.2);
+            ctx.stroke();
+          }
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      // Enable pointer events on canvas for mouse tracking through it
+      canvas.style.pointerEvents = 'none';
+      animate();
+    })();
+  </script>
 </body>
 </html>
