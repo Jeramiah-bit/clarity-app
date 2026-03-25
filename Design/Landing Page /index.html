@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clarity — Daily Self-Inquiry</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #1E2D3D;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: #FFFFFF;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav .container {
+      max-width: none;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+      position: relative;
+    }
+
+    .nav-logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: #1E2D3D;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-logo-img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 45%;
+      transform: scale(1.25);
+    }
+
+    .nav-cta {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: #1E2D3D;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.7;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: #F5F0E8;
+      padding: 120px 0 128px;
+      text-align: center;
+    }
+
+    .hero-tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: #6B7B8D;
+      margin-bottom: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 400;
+      line-height: 1.15;
+      color: #1E2D3D;
+      margin-bottom: 32px;
+    }
+
+    .hero p.subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.7;
+      color: #5C6670;
+      max-width: 600px;
+      margin: 0 auto 48px;
+    }
+
+    .email-form {
+      display: flex;
+      gap: 12px;
+      max-width: 480px;
+      margin: 0 auto 20px;
+      scroll-margin-top: 100px;
+    }
+
+    .email-form input {
+      flex: 1;
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      color: #1E2D3D;
+      background: #FFFFFF;
+      border: 1px solid rgba(30, 45, 61, 0.15);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .email-form input::placeholder {
+      color: #8E8E93;
+    }
+
+    .email-form input:focus {
+      border-color: #9AB1C0;
+    }
+
+    .email-form button {
+      padding: 14px 28px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #FFFFFF;
+      background: #1E2D3D;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .email-form button:hover {
+      opacity: 0.85;
+    }
+
+    .hero .disclaimer {
+      font-size: 12px;
+      color: #6B7B8D;
+    }
+
+    /* ── VALUE PROPS ── */
+    .value-props {
+      background: #FFFFFF;
+      padding: 120px 0;
+    }
+
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #6B7B8D;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .steps {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .step {
+      text-align: center;
+      flex: 1;
+      max-width: 220px;
+    }
+
+    .step-icon-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 1.5px solid #9AB1C0;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-icon-circle svg {
+      width: 32px;
+      height: 32px;
+      stroke: #9AB1C0;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .step-icon-circle .icon-img {
+      width: 44px;
+      height: 44px;
+      display: block;
+      transform: scaleX(-1) translateY(-1px);
+      filter: invert(75%) sepia(10%) saturate(600%) hue-rotate(165deg) brightness(90%) contrast(85%);
+      object-fit: contain;
+    }
+
+    .step-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding-top: 24px;
+      flex-shrink: 0;
+      width: 80px;
+    }
+
+    .step-arrow-line {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      color: #9AB1C0;
+    }
+
+    .step-arrow-line svg {
+      width: 48px;
+      height: 16px;
+      stroke: #9AB1C0;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .step-arrow-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #9AB1C0;
+      margin-top: 6px;
+    }
+
+    .step h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1E2D3D;
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.65;
+      color: #5C6670;
+    }
+
+    /* ── SAMPLE QUESTIONS ── */
+    .questions {
+      background: #F5F0E8;
+      padding: 120px 0 128px;
+      text-align: center;
+    }
+
+    .questions-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #6B7B8D;
+      margin-bottom: 48px;
+    }
+
+    .questions-list {
+      list-style: none;
+      max-width: 620px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .questions-list li {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.45;
+      color: #1E2D3D;
+      padding: 36px 0;
+      border-bottom: 1px solid rgba(154, 177, 192, 0.25);
+      transition: color 0.2s;
+    }
+
+    .questions-list li:first-child {
+      padding-top: 0;
+    }
+
+    .questions-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .questions-list li:hover {
+      color: #9AB1C0;
+    }
+
+    /* ── SECOND CTA ── */
+    .second-cta {
+      background: #1E2D3D;
+      padding: 120px 0 128px;
+      text-align: center;
+    }
+
+    .second-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.3;
+      color: #FFFFFF;
+      margin-bottom: 36px;
+    }
+
+    .second-cta .email-form {
+      max-width: 460px;
+    }
+
+    .second-cta .email-form input {
+      background: #F5F0E8;
+      border-color: transparent;
+      color: #1E2D3D;
+    }
+
+    .second-cta .email-form input::placeholder {
+      color: #8E8E93;
+    }
+
+    .second-cta .email-form button {
+      background: #9AB1C0;
+      color: #FFFFFF;
+    }
+
+    .second-cta-credibility {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(245, 240, 232, 0.45);
+      margin-bottom: 32px;
+      letter-spacing: 0.2px;
+    }
+
+    .second-cta-tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: rgba(245, 240, 232, 0.5);
+      margin-top: 20px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1E2D3D;
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid rgba(245, 240, 232, 0.08);
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .footer-logo-img {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      object-fit: cover;
+      opacity: 0.85;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: #F5F0E8;
+    }
+
+    footer p {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: #8E8E93;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .hero {
+        padding: 56px 0 64px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .hero p.subtitle {
+        font-size: 16px;
+      }
+
+      .email-form {
+        flex-direction: column;
+      }
+
+      .email-form button {
+        padding: 16px 28px;
+      }
+
+      .steps {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .step {
+        max-width: 300px;
+      }
+
+      .step-arrow {
+        padding-top: 0;
+        width: auto;
+        transform: rotate(90deg);
+        margin: 8px 0;
+      }
+
+      .questions-list li {
+        font-size: 20px;
+      }
+
+      .second-cta h2 {
+        font-size: 26px;
+      }
+
+      .second-cta .email-form {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-logo"><img src="logo.png" alt="Clarity" class="nav-logo-img"></a>
+      <span class="nav-title">Clarity</span>
+      <a href="#waitlist-form" class="nav-cta">Join the waitlist</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="waitlist">
+    <div class="container">
+      <h1>One question a day.<br>Know yourself better.</h1>
+      <p class="subtitle">Answer one honest question each morning — by voice or on camera. Watch yourself gain clarity over your life.</p>
+      <form id="waitlist-form" class="email-form" onsubmit="return false;">
+        <input type="email" placeholder="Enter your email" aria-label="Email address" required>
+        <button type="submit">Join the waitlist</button>
+      </form>
+      <p class="disclaimer">No spam. Just a notification when Clarity launches on iOS.</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="value-props">
+    <div class="container">
+      <p class="section-label">How Clarity works</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-icon-circle">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <h3>One question a day.</h3>
+          <p>Each day you receive a single question drawn from Stoic philosophy, Buddhist inquiry, and Jungian reflection.</p>
+        </div>
+
+        <div class="step-arrow">
+          <div class="step-arrow-line">
+            <svg viewBox="0 0 48 16" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="8" x2="40" y2="8"/>
+              <polyline points="36 4 42 8 36 12"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-icon-circle">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3Z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="23"/>
+              <line x1="8" y1="23" x2="16" y2="23"/>
+            </svg>
+          </div>
+          <h3>Speak, don't type.</h3>
+          <p>Answer by voice or on camera. The hesitations, the corrections — that's where the real answers live.</p>
+        </div>
+
+        <div class="step-arrow">
+          <div class="step-arrow-line">
+            <svg viewBox="0 0 48 16" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="8" x2="40" y2="8"/>
+              <polyline points="36 4 42 8 36 12"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-icon-circle">
+            <img src="icon-growth.png" alt="Growth" class="icon-img">
+          </div>
+          <h3>Watch yourself grow.</h3>
+          <p>Your archive becomes a map of your own mind in your own voice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAMPLE QUESTIONS -->
+  <section class="questions">
+    <div class="container">
+      <p class="questions-label">Could you answer these out loud — right now?</p>
+      <ul class="questions-list">
+        <li>"What are you pretending not to know right now?"</li>
+        <li>"What would you do this week if you weren't afraid of how it looked?"</li>
+        <li>"Who do you owe an honest conversation — and what would you actually say?"</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SECOND CTA -->
+  <section class="second-cta">
+    <div class="container">
+      <p class="second-cta-credibility">Built on principles from Stoic philosophy, Buddhist inquiry, and Jungian psychology.</p>
+      <h2>Be the first to know<br>when Clarity launches.</h2>
+      <form class="email-form" onsubmit="return false;">
+        <input type="email" placeholder="your@email.com" aria-label="Email address" required>
+        <button type="submit">Notify me</button>
+      </form>
+      <p class="second-cta-tagline">One question a day. Total honesty. It compounds.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Clarity" class="footer-logo-img">
+        <div class="footer-logo">Clarity</div>
+      </div>
+      <p>&copy; 2026 Clarity App. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
