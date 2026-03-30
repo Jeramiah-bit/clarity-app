@@ -1,15 +1,20 @@
 {
   "expo": {
-    "name": "accountability-mirror",
-    "slug": "accountability-mirror",
+    "name": "Clarity",
+    "slug": "clarity-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "accountabilitymirror",
-    "userInterfaceStyle": "automatic",
+    "scheme": "clarity",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Clarity needs microphone access to record your spoken answers.",
+        "NSCameraUsageDescription": "Clarity needs camera access for video recording mode.",
+        "NSPhotoLibraryUsageDescription": "Clarity needs photo library access to save your recordings."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -33,10 +38,7 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
-          "dark": {
-            "backgroundColor": "#000000"
-          }
+          "backgroundColor": "#F5F0E8"
         }
       ]
     ],
